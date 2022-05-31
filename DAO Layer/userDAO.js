@@ -12,4 +12,16 @@ const getUsers = function (done) {
     })
 }
 
-module.exports = { getUsers };
+const getUserById = function (userId, done) {
+    fs.readFile('./users.json', (err, fileContent) => {
+        if (err)
+            return done('Error while reading file');
+
+        let userData = JSON.parse(fileContent);
+        let user = userData.find(curUser => curUser.userId == userId);
+
+        return done(undefined, user);
+    })
+}
+
+module.exports = { getUsers, getUserById };

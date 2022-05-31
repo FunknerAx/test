@@ -17,4 +17,16 @@ routes.get('/', (req, res) => {
     }
 })
 
+routes.get('/:userId', (req, res) => {
+    try {
+        userController.getUserById(req.params.userId, (err, result) => {
+            if (err)
+                return res.status(400).send(err);
+
+            return res.status(200).send({ status: "OK", data: result });
+        })
+    } catch (err) {
+        return res.status(500).send('Something wrong in search user by id....');
+    }
+})
 module.exports = routes;
