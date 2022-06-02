@@ -24,4 +24,23 @@ const getUserById = function (userId, done) {
     })
 }
 
-module.exports = { getUsers, getUserById };
+const updateUserById = function (userId, userName, done) {
+    fs.readFile('./users.json', (err, fileContent) => {
+        if (err) return done(err);
+
+        let userData = JSON.parse(fileContent);
+        let userIndex = userData.findIndex(cur => cur.userId == userId);
+
+        if (userIndex == -1) return done(`User with id = ${userId} didn\`t find`);
+        userData[userIndex].userName = userName;
+
+        fs.writeFile('./users.json', JSON.stringify(userData), (err, updated) => {
+            if (err) return done(err);
+
+            return done(undefined, "Success updated");
+
+        })
+    })
+}
+
+module.exports = { getUsers, getUserById, updateUserById };

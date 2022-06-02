@@ -8,4 +8,8 @@ const getUserById = function (userId, done) {
     userDAO.getUserById(userId, done);
 }
 
-module.exports = { getUsers, getUserById };
+const updateUserById = function (userId, userName, done) {
+    userDAO.updateUserById(userId, userName, done);
+}
+
+module.exports = { getUsers, getUserById, updateUserById };

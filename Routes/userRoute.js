@@ -29,4 +29,16 @@ routes.get('/:userId', (req, res) => {
         return res.status(500).send('Something wrong in search user by id....');
     }
 })
+
+routes.post('/:userId', (req, res) => {
+    try {
+        userController.updateUserById(req.params.userId, req.body.userName, (err, result) => {
+            if (err) return res.status(400).send(err);
+
+            return res.status(200).send(result);
+        })
+    } catch (err) {
+        return res.status(500).send('Something wrong with update...');
+    }
+})
 module.exports = routes;
