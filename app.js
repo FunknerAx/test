@@ -2,12 +2,16 @@ const express = require('express');
 const app = express();
 const config = require('./configs');
 const userRoute = require('./Routes/userRoute');
+const swaggerUI = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDoc = YAML.load('./api-docs/swagger.yaml');
 
 const LoggerMiddleware = (req, res, next) => {
-    console.log(`${req.method} ${req.url}`)
+    console.log(`${new Date().toISOString()} ${req.method} ${req.url}`)
     next();
 }
 
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 app.use(LoggerMiddleware);
 app.use(express.json());
 
