@@ -26,4 +26,23 @@ router.post('/register', (req, res) => {
     }
 })
 
+router.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        if (!(email && password))
+            return res.status(400).send({ error: "Missing required parameters" })
+
+        authController.loginUser({ email, password }, (err, result) => {
+            if (err)
+                return res.status(400).send({ error: "user not found" });
+
+            return res.status(201).send(result);
+        })
+
+    } catch (err) {
+        res.status(500).send({ err: err });
+    }
+})
+
 module.exports = router;
